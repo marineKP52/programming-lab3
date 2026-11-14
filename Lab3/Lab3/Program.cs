@@ -6,7 +6,7 @@ namespace Lab3
     {
         public static void Main(string[] args)
         {
-           /* Season currentSeason = Season.Summer;
+           Season currentSeason = Season.Summer;
 
             JuiceProductFactory factory = JuiceFactorySelector.GetJuiceFactory(currentSeason);
 
@@ -18,7 +18,7 @@ namespace Lab3
             Console.WriteLine("\nCreated products:");
 
             Console.WriteLine(fruitJuice.ShowProduct());
-            Console.WriteLine(berryJuice.ShowProduct());*/
+            Console.WriteLine(berryJuice.ShowProduct());
 
 
 
