@@ -6,14 +6,39 @@ namespace Lab3
     {
         public static void Main(string[] args)
         {
+            Season currentSeason = Season.Summer;
+
+            JuiceProductFactory factory = JuiceFactorySelector.GetJuiceFactory(currentSeason);
+
+            JuiceProduct fruitJuice = factory.CreateFruitJuiceProduct("Apple Juice");
+
+            JuiceProduct berryJuice = factory.CreateBerryJuiceProduct("Strawberry Juice");
+
+            Console.WriteLine($"Current season: {currentSeason}");
+            Console.WriteLine("\nCreated products:");
+
+            Console.WriteLine(fruitJuice.ShowProduct());
+            Console.WriteLine(berryJuice.ShowProduct());
+
+
+
+
             Game game = new Game();
 
-            Console.WriteLine("Initial enemies:");
+            Console.WriteLine("\nInitial enemies:");
             game.ShowEnemies();
 
             game.Attack(game.Enemies[0], 6);
             game.Attack(game.Enemies[1], 25);
 
+            Console.WriteLine("\nEnemies after attacks:");
+            game.ShowEnemies();
+
+            game.Attack(game.Enemies[0], 6);
+            game.Attack(game.Enemies[1], 25);
+            game.Attack(game.Enemies[2], 1);
+
+            Console.WriteLine("\nEnemies after attacks:");
             game.ShowEnemies();
         }
     }
@@ -166,6 +191,7 @@ namespace Lab3
         {
             Name = name;
             HasCloned = false;
+            SetNewId();
         }
 
         protected void SetNewId()
@@ -182,16 +208,12 @@ namespace Lab3
         public void TakeDamage(int damage)
         {
             if (damage <= 0 || HealthLevel <= 0)
-            {
                 return;
-            }
 
             HealthLevel -= damage;
 
             if (HealthLevel < 0)
-            {
                 HealthLevel = 0;
-            }
         }
 
         public string Show()
@@ -217,7 +239,6 @@ namespace Lab3
 
             EnemyBot bot = JsonSerializer.Deserialize<EnemyBot>(json);
 
-            bot.SetNewId();
             return bot;
         }
     }
@@ -249,7 +270,10 @@ namespace Lab3
             if (!_bots.ContainsKey(type))
                 return null;
 
-            return _bots[type].Clone();
+            EnemyBotPrototype bot = _bots[type].Clone();
+            bot.HasCloned = false;
+
+            return bot;
         }
     }
 
@@ -294,8 +318,6 @@ namespace Lab3
 
         public void ShowEnemies()
         {
-            Console.WriteLine("\nAll enemies:");
-
             foreach (EnemyBotPrototype enemy in _enemies)
             {
                 Console.WriteLine(enemy.Show()); 
