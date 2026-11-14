@@ -12,7 +12,18 @@ namespace Lab3
 
             Season currentSeason = Season.Winter;
 
-            JuiceProductFactory factory = JuiceFactorySelector.GetJuiceFactory(currentSeason);
+            JuiceProductFactory factory = null;
+
+            try
+            {
+                factory = JuiceFactorySelector.GetJuiceFactory(currentSeason);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            
 
             JuiceProduct fruitJuice = factory.CreateFruitJuiceProduct("Apple Juice");
 
